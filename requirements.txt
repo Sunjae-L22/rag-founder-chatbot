@@ -1,0 +1,11 @@
+numpy
+pandas
+matplotlib
+seaborn
+kiwipiepy
+sentence-transformers
+transformers
+faiss-cpu
+openai
+gradio
+jupyterlab

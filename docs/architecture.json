@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "사장님, 전설이 되다 · RAG 구조",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1240,
+      670
+    ]
+  },
+  "components": [
+    {
+      "id": "chat",
+      "type": "frontend",
+      "label": "대화 화면",
+      "sublabel": "Gradio · 질문과 대화 이력",
+      "pos": [
+        30,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "rewrite",
+      "type": "backend",
+      "label": "맥락 반영",
+      "sublabel": "질의 재작성 · 최근 질문",
+      "pos": [
+        360,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "search",
+      "type": "database",
+      "label": "의미 검색",
+      "sublabel": "ko-sroberta · FAISS",
+      "pos": [
+        690,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "gate",
+      "type": "security",
+      "label": "근거 선별",
+      "sublabel": "유사도 0.53 이상",
+      "pos": [
+        1020,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "corpus",
+      "type": "database",
+      "label": "공식 자료",
+      "sublabel": "726건 → 청크 8,945개",
+      "pos": [
+        690,
+        50
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "answer",
+      "type": "backend",
+      "label": "답변 구성",
+      "sublabel": "gpt-4o-mini / 원문 안내",
+      "pos": [
+        690,
+        500
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "output",
+      "type": "frontend",
+      "label": "사용자에게 전달",
+      "sublabel": "답변 · 출처 · 유사도 · 고지",
+      "pos": [
+        360,
+        500
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "refusal",
+      "type": "backend",
+      "label": "자료 없음 응대",
+      "sublabel": "사실 생성 금지 · 기관 안내",
+      "pos": [
+        1020,
+        500
+      ],
+      "size": [
+        190,
+        72
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "chat",
+      "to": "rewrite",
+      "label": "질문 + 이력"
+    },
+    {
+      "from": "rewrite",
+      "to": "search",
+      "label": "독립형 질문"
+    },
+    {
+      "from": "corpus",
+      "to": "search",
+      "label": "인덱스 구축",
+      "labelDy": 75
+    },
+    {
+      "from": "search",
+      "to": "gate",
+      "label": "상위 5개"
+    },
+    {
+      "from": "gate",
+      "to": "answer",
+      "label": "근거 있음"
+    },
+    {
+      "from": "gate",
+      "to": "refusal",
+      "label": "근거 없음",
+      "labelDy": 75
+    },
+    {
+      "from": "answer",
+      "to": "output",
+      "label": "출처와 함께"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "멀티턴",
+      "items": [
+        "이전 사용자 질문 최대 3개로 재작성",
+        "생성 단계에는 최근 3턴 전달"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "API 키가 없을 때",
+      "items": [
+        "직전 질문 결합으로 검색 보강",
+        "LLM 생성 대신 검색 원문 안내"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "범위",
+      "items": [
+        "노트북의 논리 흐름을 시각화",
+        "Netlify 배포 구성 파일은 미확보"
+      ]
+    }
+  ]
+}

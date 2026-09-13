@@ -1,0 +1,11 @@
+{
+  "diagram_type": "architecture",
+  "output": "docs/architecture.html",
+  "specification_sha256": "4836e0a6dcf105aa8e0767c959c89b5c31259d8880277777f70caad3b28936eb",
+  "artifact_sha256": "2e74cecf106b37833148f45f9ffcc493135bb77ac9de08a9c02273d07c22c5fe",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "browser_evidence": "passed",
+  "visual_review": "passed",
+  "correction_rounds": 1,
+  "visual_review_scope": "Inspected light 1440x900 and dark 2048x1320 screenshots; automated containment passed all four desktop sizes."
+}
