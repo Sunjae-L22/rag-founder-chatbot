@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "RAG 웹 배포 · 2026년 9월 보완",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1240,
+      630
+    ]
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "frontend",
+      "label": "사용자 브라우저",
+      "sublabel": "질문 · 최근 3턴",
+      "pos": [
+        30,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "netlify",
+      "type": "cloud",
+      "label": "Netlify",
+      "sublabel": "정적 화면 · API 프록시",
+      "pos": [
+        360,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "Python API",
+      "sublabel": "FastAPI · 입력 검증",
+      "pos": [
+        690,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "rag",
+      "type": "backend",
+      "label": "RAG 실행",
+      "sublabel": "Kiwi · ko-sroberta · FAISS",
+      "pos": [
+        1020,
+        260
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "dataset",
+      "type": "database",
+      "label": "공식 자료",
+      "sublabel": "dataset.csv · 726건",
+      "pos": [
+        1020,
+        50
+      ],
+      "size": [
+        190,
+        72
+      ]
+    },
+    {
+      "id": "llm",
+      "type": "external",
+      "label": "OpenAI API",
+      "sublabel": "키 설정 시 재작성·생성",
+      "pos": [
+        1020,
+        470
+      ],
+      "size": [
+        190,
+        72
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "browser",
+      "to": "netlify",
+      "label": "HTTPS"
+    },
+    {
+      "from": "netlify",
+      "to": "api",
+      "label": "/api/*"
+    },
+    {
+      "from": "api",
+      "to": "rag",
+      "label": "질문 + 이력"
+    },
+    {
+      "from": "dataset",
+      "to": "rag",
+      "label": "시작 시 적재",
+      "labelDy": 75
+    },
+    {
+      "from": "rag",
+      "to": "llm",
+      "label": "선택적 호출",
+      "labelDy": 75
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "보존한 방식",
+      "items": [
+        "원래 임베딩 모델·FAISS·임계값 유지",
+        "노트북 함수를 API 서버로 분리"
+      ]
+    },
+    {
+      "dot": "amber",
+      "title": "실행 모드",
+      "items": [
+        "키 없음: 검색 원문과 출처 안내",
+        "키 있음: 체험 코드 설정 후 AI 응답"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "현재 상태",
+      "items": [
+        "새 배포 구성 · 과거 배포의 복원 아님",
+        "공개 운영은 Python 호스팅 연결 필요"
+      ]
+    }
+  ]
+}

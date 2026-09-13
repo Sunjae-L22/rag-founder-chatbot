@@ -1,0 +1,10 @@
+{
+  "diagram_type": "architecture",
+  "output": "docs/deployment-architecture.html",
+  "specification_sha256": "fa5182566bf0369a02b4098f397e62568b6d156adc75d3f71895c97013dc84be",
+  "artifact_sha256": "58b379f32a6227b2764d3eb92e4caac0d770217974a7e7c21e16ad8a83eded71",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "browser_evidence": "passed",
+  "visual_review": "passed",
+  "correction_rounds": 1
+}
